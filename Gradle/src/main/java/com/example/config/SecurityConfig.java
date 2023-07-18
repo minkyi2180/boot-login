@@ -1,5 +1,6 @@
 package com.example.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,29 +8,52 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.example.login.LoginDetailService;
+import com.example.login.LoginFail;
+import com.example.login.LoginSuccess;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	@Autowired
+	private LoginFail loginFail;
+	 
+	@Autowired
+	private LoginSuccess loginSuccess;
+
+	@Autowired
+	private LoginDetailService loginDetailService;
+	
 	@Bean
 	public BCryptPasswordEncoder encode() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	protected void configure(HttpSecurity http) throws Exception{
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
+		
 		http.authorizeRequests()
-			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-			.anyRequest()
-			.permitAll()
-			.and()
+			.antMatchers("/admin/**").hasRole("ADMIN")
+			.antMatchers("/user/**").hasAnyRole("ADMIN, USER")
+			.anyRequest().permitAll()
+		.and()
 			.formLogin()
-			.loginPage("/auth/signin")
-			.loginProcessingUrl("/auth/signin") 
-			.defaultSuccessUrl("/")
-			.failureUrl("/auth/failed")
+			.loginPage("/") // 인증 필요한 페이지 접근시 이동페이지
+			.loginProcessingUrl("/login")
+	        .successHandler(loginSuccess)
+	        .failureHandler(loginFail)
+		.and()
+			.logout()
+			.logoutSuccessUrl("/")
 			.and()
-	        .logout()
-	        .logoutSuccessUrl("/")
-	        ;
+			.rememberMe()
+			.key("rememberKey")
+			.rememberMeCookieName("rememberMeCookieName")
+			.rememberMeParameter("remember-me")
+			.tokenValiditySeconds(60 * 60 * 24 * 7)
+			.userDetailsService(loginDetailService)
+		;
+		
 	}
 }

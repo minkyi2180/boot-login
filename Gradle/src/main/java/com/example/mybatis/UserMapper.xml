@@ -28,7 +28,21 @@
 		)
 	</insert>
 	
-	
+	<select id="login" resultType="User">
+    SELECT 
+        U.ID
+        ,U.USERNAME
+        ,U.PASSWORD
+        ,U.EMAIL
+        ,U.NICKNAME
+        ,U.PHONE
+        ,U.ROLE
+        
+    FROM 
+        GR_USER U 
+
+    WHERE U.USERNAME = #{username }    
+</select>
 	
 	
 </mapper>

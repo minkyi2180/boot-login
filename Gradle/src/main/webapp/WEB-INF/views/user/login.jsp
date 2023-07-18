@@ -7,6 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+<c:if test="${!empty loginFailMsg }">
+    <script type="text/javascript">
+        const msg = "${loginFailMsg}";
+        swal(msg);
+    </script>
+</c:if>
 <form action="/login" method="post">
  
 	            <div class="input_aera"><input type="text" name="username"  value="" required placeholder="이메일을 입력해 주세요" maxlength="30" ></div>
