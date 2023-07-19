@@ -33,6 +33,12 @@ public class OAuthUserInfo {
 			email = (String) response.get("email");
 			phone = (String) response.get("mobile") == null ? "" : (String) response.get("mobile");
 			break;
+			
+		case "kakao":
+			Map<String, Object> kakaoAccount = oauth2user.getAttribute("kakao_account");
+			email = (String) kakaoAccount.get("email");
+			phone = oauth2user.getAttribute("phone") == null ? "" : oauth2user.getAttribute("phone");
+			break;
 		}
 		
 		
@@ -62,6 +68,11 @@ public class OAuthUserInfo {
 			Map<String, Object> response = oauth2user.getAttribute("response");
 			id = (String) response.get("id");
 			break;
+			
+		case "kakao":
+			id = oauth2user.getAttribute("id").toString();
+			break;
+			
 			
 		}
 		return provider + "_" + id;

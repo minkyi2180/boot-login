@@ -27,7 +27,7 @@
 					</form>
 					<div id="oauth_login">
 				<div>
-					<a href="/oauth2/authorization/kakao"></a>
+					<a href="/oauth2/authorization/kakao"><img src="/img/k_btn.png"></a>
 				</div>
  
 				<div>
