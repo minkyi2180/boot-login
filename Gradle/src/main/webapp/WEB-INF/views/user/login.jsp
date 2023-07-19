@@ -31,7 +31,7 @@
 				</div>
  
 				<div>
-					<a href="/oauth2/authorization/naver"></a>
+					<a href="/oauth2/authorization/naver"><img src="/img/n_btn.png" style="width: 20%;"></a>
 				</div>
 				
 				<div>
