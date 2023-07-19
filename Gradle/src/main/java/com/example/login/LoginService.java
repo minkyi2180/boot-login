@@ -3,9 +3,11 @@ package com.example.login;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.example.dto.User;
 
@@ -16,7 +18,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class LoginService implements UserDetails {
+public class LoginService implements UserDetails, OAuth2User {
 	private User user;
 
 	@Override
@@ -60,6 +62,21 @@ public class LoginService implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
+
+	@Override
+	public Map<String, Object> getAttributes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
+	
+	
+ 
 
 }

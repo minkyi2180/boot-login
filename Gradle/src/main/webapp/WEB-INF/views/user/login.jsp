@@ -35,7 +35,7 @@
 				</div>
 				
 				<div>
-					<a href="/oauth2/authorization/google"></a>
+					<a href="/oauth2/authorization/google"><img src="/img/g_btn.png"></a>
 				</div>
 			</div>
 			

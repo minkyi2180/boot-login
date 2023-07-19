@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.example.login.LoginDetailService;
 import com.example.login.LoginFail;
 import com.example.login.LoginSuccess;
+import com.example.login.OauthUserService;
 
 @Configuration
 @EnableWebSecurity
@@ -25,8 +26,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private LoginDetailService loginDetailService;
 	
+	@Autowired
+	private OauthUserService oauthUserService;
+	
 	@Bean
-	public BCryptPasswordEncoder encode() {
+	public static BCryptPasswordEncoder encodePwd() {
 		return new BCryptPasswordEncoder();
 	}
 	@Override
@@ -53,6 +57,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.rememberMeParameter("remember-me")
 			.tokenValiditySeconds(60 * 60 * 24 * 7)
 			.userDetailsService(loginDetailService)
+			.and()
+			.oauth2Login()
+			.loginPage("/")
+			.successHandler(loginSuccess)
+			.userInfoEndpoint()
+			.userService(oauthUserService)
 		;
 		
 	}
