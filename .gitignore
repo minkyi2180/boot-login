@@ -10,6 +10,9 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# ignore properties file
+application.properties
+
 # Package Files #
 *.jar
 *.war
